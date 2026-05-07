@@ -38,6 +38,13 @@ I tested five different architectures to find the best balance between overall c
 
 ---
 
+##  Visualizing the Solution
+Below is the deployed Streamlit application. Users can input health indicators (BMI, Blood Pressure, etc.) to receive an instant risk assessment.
+
+![Diabetes Risk Predictor Interface](D-Risk_Analyser_Result.png)
+
+---
+
 ## Tech Stack & Implementation
 * **Language:** Python 3.10
 * **Libraries:** Pandas, NumPy, Scikit-Learn, XGBoost, Joblib
