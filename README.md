@@ -10,7 +10,7 @@ This project goes beyond simple accuracy—it focuses on **Medical Recall**, ens
 The goal was to move beyond binary "Yes/No" classification. By analyzing 21 health indicators (BMI, Blood Pressure, Physical Activity, etc.), this system categorizes individuals into three distinct risk tiers.
 
 ### Key Challenges & Solutions:
-* **Handling Extreme Class Imbalance:** The original dataset was 84% "Healthy." I implemented undersampling to create a balanced 1:1:1 ratio, forcing the model to actually learn the specific features of pre-diabetes and diabetes.
+* **Handling Extreme Class Imbalance:** The original dataset was 84% "Healthy." I implemented undersampling to create a balanced 1:1:1 ratio, forcing the model to actually learn the specific features of pre-diabetes and diabetes. Resolved a critical **84% class skew** using strategic undersampling and outlier clipping.
 * **Managing Data Noise:** Survey data is naturally "noisy." I cleaned and capped outliers in BMI and reported "poor health days" to prevent skewed results.
 * **The "Pre-diabetes" Gray Area:** Identifying the transition state (Class 1) is a known challenge in medical ML. I benchmarked 5 different models to find the one with the best boundary-crossing logic.
 
@@ -34,6 +34,7 @@ I tested five different architectures to find the best balance between overall c
 ## Key Insights
 * **Blood Pressure vs. BMI:** Feature importance analysis revealed that **High Blood Pressure** was a significantly stronger predictor of diabetes than BMI.
 * **The Clinical Limit:** While 54% accuracy is lower than typical datasets, it represents a realistic ceiling for **self-reported survey data**. This suggests that while lifestyle-based ML is a powerful screening tool, clinical blood tests remain essential for confirming pre-diabetic states.
+* **Deployment:** Inference engine serialized via Joblib for sub-second response times in the web UI.
 
 ---
 
