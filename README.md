@@ -1,59 +1,185 @@
-# Diabetes Risk Analysing Intelligence Engine
+# Diabetes Risk Assessment Engine
 
-An end-to-end Machine Learning pipeline designed to predict diabetes risk levels (Healthy, Pre-diabetic, or Diabetic) using the CDC's BRFSS survey data. 
-
-This project goes beyond simple accuracy—it focuses on **Medical Recall**, ensuring the model effectively identifies high-risk cases to act as an early-warning screening tool.
+An end-to-end Machine Learning system that assesses diabetes risk by classifying individuals as **Healthy**, **Pre-diabetic**, or **Diabetic** using the CDC's BRFSS health survey dataset. Designed as an intelligent screening tool, the system prioritizes identifying high-risk individuals to support earlier intervention.
 
 ---
 
-##  Project Overview
-The goal was to move beyond binary "Yes/No" classification. By analyzing 21 health indicators (BMI, Blood Pressure, Physical Activity, etc.), this system categorizes individuals into three distinct risk tiers.
+## Problem Statement
 
-### Key Challenges & Solutions:
-* **Handling Extreme Class Imbalance:** The original dataset was 84% "Healthy." I implemented undersampling to create a balanced 1:1:1 ratio, forcing the model to actually learn the specific features of pre-diabetes and diabetes. Resolved a critical **84% class skew** using strategic undersampling and outlier clipping.
-* **Managing Data Noise:** Survey data is naturally "noisy." I cleaned and capped outliers in BMI and reported "poor health days" to prevent skewed results.
-* **The "Pre-diabetes" Gray Area:** Identifying the transition state (Class 1) is a known challenge in medical ML. I benchmarked 5 different models to find the one with the best boundary-crossing logic.
+Diabetes often progresses silently until serious complications arise. Early identification of individuals at risk—especially those in the **pre-diabetic stage**—can significantly improve preventive healthcare.
+
+This project aims to build a machine learning system capable of assessing diabetes risk from lifestyle and health-related indicators, enabling timely awareness and supporting informed healthcare decisions.
+
+---
+
+## Solution Overview
+
+The system analyzes **21 health-related attributes** such as BMI, blood pressure, physical activity, smoking habits, and general health to classify individuals into one of three categories:
+
+- Healthy
+- Pre-diabetic
+- Diabetic
+
+To improve reliability, multiple machine learning models were benchmarked and evaluated before selecting the final model based on medical screening performance.
+
+---
+
+## System Workflow
+
+```text
+Patient Health Information
+            │
+            ▼
+Data Cleaning & Preprocessing
+            │
+            ▼
+Class Balancing & Feature Engineering
+            │
+            ▼
+Model Benchmarking
+(SVM, Random Forest, Logistic Regression,
+Decision Tree, XGBoost)
+            │
+            ▼
+Hyperparameter Optimization
+            │
+            ▼
+Best Model Selection
+            │
+            ▼
+Model Serialization (Joblib)
+            │
+            ▼
+Streamlit Web Application
+            │
+            ▼
+Diabetes Risk Assessment
+```
+
+---
+
+## Engineering Challenges
+
+### Handling Class Imbalance
+
+The original dataset contained approximately **84% healthy individuals**, making it difficult for the model to learn minority classes.
+
+To address this, strategic undersampling was performed to create a balanced dataset and improve learning across all three risk categories.
+
+### Managing Noisy Survey Data
+
+Survey datasets naturally contain inconsistencies and extreme values.
+
+Outlier clipping and preprocessing were performed to improve data quality without removing valuable information.
+
+### Detecting the Pre-diabetic Stage
+
+Distinguishing pre-diabetic individuals is considerably more challenging than binary classification.
+
+Five different machine learning algorithms were benchmarked to identify the model with the strongest capability for detecting transitional cases.
 
 ---
 
 ## Model Benchmarking
-I tested five different architectures to find the best balance between overall correctness and patient safety. 
 
-| Model | Accuracy | Class 2 Recall (Diabetic) |
-| :--- | :--- | :--- |
-| **SVM** | **54%** | **0.64** |
+| Model | Accuracy | Recall (Diabetic) |
+|--------|---------:|------------------:|
+| **Support Vector Machine (SVM)** | **54%** | **0.64** |
 | XGBoost | 53% | 0.62 |
 | Logistic Regression | 54% | 0.59 |
 | Random Forest | 52% | 0.56 |
 | Decision Tree | 43% | 0.41 |
 
-**Why SVM?** In a medical context, The SVM achieved the highest **Recall (0.64)**, making it the most effective tool for risk detection.
+### Why SVM?
+
+Although multiple models achieved similar accuracy, **Support Vector Machine (SVM)** delivered the highest recall for diabetic patients, making it the preferred choice for medical screening where minimizing missed high-risk cases is more important than maximizing overall accuracy.
 
 ---
 
 ## Key Insights
-* **Blood Pressure vs. BMI:** Feature importance analysis revealed that **High Blood Pressure** was a significantly stronger predictor of diabetes than BMI.
-* **The Clinical Limit:** While 54% accuracy is lower than typical datasets, it represents a realistic ceiling for **self-reported survey data**. This suggests that while lifestyle-based ML is a powerful screening tool, clinical blood tests remain essential for confirming pre-diabetic states.
-* **Deployment:** Inference engine serialized via Joblib for sub-second response times in the web UI.
+
+- High Blood Pressure emerged as a stronger predictor of diabetes than BMI.
+- Medical datasets require evaluation beyond accuracy; recall plays a critical role in identifying high-risk patients.
+- Lifestyle-based machine learning models can effectively support early screening but should complement—not replace—clinical diagnosis.
 
 ---
 
-##  Visualizing the Solution
-Below is the deployed Streamlit application. Users can input health indicators (BMI, Blood Pressure, etc.) to receive an instant risk assessment.
+## Application Preview
+
+The trained model was deployed using **Streamlit**, allowing users to enter health information and receive an instant diabetes risk assessment.
 
 ![Diabetes Risk Predictor Interface](D-Risk_Analyser_Result.png)
 
 ---
 
-## Tech Stack & Implementation
-* **Language:** Python 3.10
-* **Libraries:** Pandas, NumPy, Scikit-Learn, XGBoost, Joblib
-* **Persistence:** Serialized models (using `joblib`) to create a reusable inference engine.
-* **Deployment:** Integrated via **Streamlit** (managed in **VS Code**) for a user-facing health-risk calculator.
+## Tech Stack
+
+**Programming Language**
+
+- Python
+
+**Machine Learning**
+
+- Scikit-learn
+- XGBoost
+
+**Data Processing**
+
+- Pandas
+- NumPy
+
+**Model Serialization**
+
+- Joblib
+
+**Deployment**
+
+- Streamlit
+
+---
+
+## Project Structure
+
+```text
+Diabetes_Risk_Assessment_Engine/
+│
+├── app.py
+├── model.joblib
+├── notebook.ipynb
+├── requirements.txt
+├── D-Risk_Analyser_Result.png
+└── README.md
+```
+
+---
 
 ## Getting Started
-1. Clone this repository.
-2. Install dependencies: `pip install -r requirements.txt`.
-3. Run the application: `streamlit run app.py`.
+
+### Clone Repository
+
+```bash
+git clone <repository-url>
+```
+
+### Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Launch the Application
+
+```bash
+streamlit run app.py
+```
+
+---
+
+## Future Improvements
+
+- Deploy the application on a cloud platform.
+- Support real-time patient monitoring.
+- Improve performance using larger and more diverse clinical datasets.
+- Extend the system into a multimodal healthcare screening platform.
 
 ---
