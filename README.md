@@ -98,6 +98,8 @@ Although multiple models achieved similar accuracy, **Support Vector Machine (SV
 
 ## Key Insights
 
+![Top 10 Factors Predicting Diabetes Risk](Top_10_Factors.png)
+
 - High Blood Pressure emerged as a stronger predictor of diabetes than BMI.
 - Medical datasets require evaluation beyond accuracy; recall plays a critical role in identifying high-risk patients.
 - Lifestyle-based machine learning models can effectively support early screening but should complement—not replace—clinical diagnosis.
