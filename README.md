@@ -3,7 +3,7 @@
 An end-to-end Machine Learning system that assesses diabetes risk by classifying individuals as **Healthy**, **Pre-diabetic**, or **Diabetic** using the CDC's BRFSS health survey dataset. Designed as an intelligent screening tool, the system prioritizes identifying high-risk individuals to support earlier intervention.
 
 ---
-
+![Project Evolution](Diabetes_assessment_engine_thumbnail.png)
 ## Problem Statement
 
 Diabetes often progresses silently until serious complications arise. Early identification of individuals at risk—especially those in the **pre-diabetic stage**—can significantly improve preventive healthcare.
